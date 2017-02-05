@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head><title>Saurabh's Store</title>
+<link rel="stylesheet" href="Design.css">
+    </head>
+	<body>
+        <div id="Wholepage">
+            <Center><b><h1>SAURABH'S ONLINE STORE</h1></b></Center>
+		<button onclick="AddProduct()" id="AddProductButton" style="visibility:visible;">Add Product</button>
+        <button onclick="Logout()" id="Logout" style="visibility:visible;">Logout</button>
+        <button onclick="storeProducts()" id="Save" style="visibility:hidden;">Save</button>
+            <button onclick="MyCart()" id="Cart" style="visibility:visible;">My Cart</button>
+		<div id="Products" style="visibility:hidden;">
+			<ul type="disc" id="ProductsList"></ul>
+		</div>	
+		<div style="visibility:hidden;" id="Form">
+			<label><h3>Product Name: </h3></label><input type="text" id="Name" required><br>
+			<label><h3>Product Description: </h3></label><input type="text" id="Desc" required><br>
+			<label><h3>Product Price: </h3></label><input type="text" id="Price" required><br>
+			<label><h3>Quantity: </h3></label><input type="text" id="Quantity" required><br>
+			<button onclick="AddToList()" id="Add">Add</button>
+		</div>
+		<script src ="ProductProject%20with%20object%20.js"></script>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>Saurabh's Online Store</title>
+    <link rel="stylesheet" href="Design.css"></head>
+    <body>
+         <div id="Wholepage">
+<Center><b><h1>SAURABH'S ONLINE STORE</h1></b></Center>
+<button onclick="Logout()" id="Logout" style="visibility:visible;">Logout</button>
+<p>PAYMENT DETAILS</p>
+        <div id="Pay" style="visibility:visible;">
+<ul type="disc" id="PaymentList"></ul>
+Total : <p id="Sum"></p>
+</div>
+<button onclick="Thanks()" id="Thanks" style="visibility:visible;">PAY</button>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <script>
+        var CurrentName=sessionStorage.getItem('key');
+        StoredUsernamePasswords();
+        var PaymentArray;
+        var Length=PaymentArray.length;
+        var Sum=0;
+for(var i=0;i<Length;i++){
+  PreviousData(i);  
+    Sum=Sum+parseInt(PaymentArray[i].Price);
+}   
+document.getElementById("Sum").innerHTML=Sum;
+function Logout()
+    {
+        window.location.href="Main.html";
+    }
+function Thanks()
+        {
+          window.location.href="Thanks.html";  
+        }
+function PreviousData(i)
+{
+    var PrevId=PaymentArray[i].Id;
+    console.log(PrevId);
+    var PrevName=PaymentArray[i].Name;
+    var PrevDesc=PaymentArray[i].Description;
+    var PrevPrice=PaymentArray[i].Price;
+    var PrevQuantity=PaymentArray[i].Quantity;
+    var ProductList=document.getElementById("PaymentList");
+            var Element = document.createElement("li");
+            var Node=document.createTextNode("Name : "+PrevName+" "+"Description : "+PrevDesc+" "+" Price : "+PrevPrice+" "+"Quantity : "+PrevQuantity);
+            Element.appendChild(Node);
+            ProductList.appendChild(Element);
+}
+function StoredUsernamePasswords() 
+        { 
+            var PrevData = localStorage.getItem(CurrentName);
+            PaymentArray= JSON.parse(PrevData); 
+            return PrevData;
+	    }
+        </script>
+        </div></body>
+</html>

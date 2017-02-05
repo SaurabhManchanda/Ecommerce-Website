@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<style>
+#Wholepage
+{
+    background-color: #4CAF50;
+    -webkit-animation: animatezoom 0.6s;
+    animation: animatezoom 0.6s
+
+}
+
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+button {
+     background-color: #FA0505;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+.imgcontainer {
+    text-align: center;
+    margin: 24px 0 12px 0;
+}
+
+img.avatar {
+    width: 15%;
+    border-radius: 10%;
+}
+
+.container {
+    padding: 16px;
+}
+@-webkit-keyframes animatezoom {
+    from {-webkit-transform: scale(0)} 
+    to {-webkit-transform: scale(1)}
+}
+    
+@keyframes animatezoom {
+    from {transform: scale(0)} 
+    to {transform: scale(1)}
+}
+
+</style>
+<body>
+<div id="Wholepage">
+<Center><b><h1>SAURABH'S ONLINE STORE</h1></b></Center>
+<form>
+  <div class="imgcontainer">
+    <img src="Signup.png" alt="Avatar" class="avatar">
+  </div>
+
+  <div class="container">
+    <label><b>Username</b></label>
+    <input type="text" placeholder="Enter Username" id="uname" onblur="CheckUserName()" required>
+      <font color="red"><p id="UserNameMismatch"></p></font>
+      <label><b>Full Name</b></label>
+    <input type="text" placeholder="Enter Full Name" id="fname" required>
+
+    <label><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" id="psw" required>
+    <label><b>Confirm Password</b></label>
+    <input type="password" placeholder="Confirm Password" id="cpsw" onblur="CheckPassword()" required>
+     <font color="red"><p id="PasswordMismatch"></p></font>
+  </div>
+</form>
+    <button onclick="CreateUser()" id="Create">Signup</button>
+    </div>
+<script>
+    
+    StoredUsernamePasswords();
+    console.log(AdminUser);
+    var AdminUser=[];
+    var Length=AdminUser.length;
+    function SaveDataToLocalStorage() 
+        {
+          localStorage.setItem("AdminUser", JSON.stringify(AdminUser));
+          alert("Data Stored");
+        }
+   function StoredUsernamePasswords() 
+        { 
+            var PrevData = localStorage.getItem("AdminUser");
+            AdminUser= JSON.parse(PrevData); 
+            return PrevData;
+	    }
+    function CreateUser()
+    {
+    for(var j=Length;j<Length+1;j++){
+    var ObjUser = new Object();
+    ObjUser.UserName=document.getElementById("uname").value;
+    ObjUser.FullName=document.getElementById("fname").value;
+    ObjUser.Password=document.getElementById("psw").value;
+    AdminUser.splice(j+1, 0, ObjUser);
+    console.log(ObjUser);
+    SaveDataToLocalStorage();
+    }
+    }
+  function CheckPassword()
+    {
+        var Password=document.getElementById("psw").value;
+        var ConfirmPassword=document.getElementById("cpsw").value;
+        if(Password!=ConfirmPassword)
+            {
+                var ErrorMessage="Password Do Not Match"
+                document.getElementById("PasswordMismatch").innerHTML=ErrorMessage;
+            }
+         else{
+                    document.getElementById("PasswordMismatch").innerHTML="";
+                }
+    }
+ function CheckUserName()
+    {
+        StoredUsernamePasswords();
+        var InputUserName=document.getElementById("uname").value;
+        for(var i=0;i<AdminUser.length;i++)
+            {
+                if(AdminUser[i].UserName==InputUserName)
+                    {
+                       var UserNameErrorMessage="UserName Already Exist";
+                        document.getElementById("UserNameMismatch").innerHTML=UserNameErrorMessage;
+                    }
+                else{
+                    document.getElementById("UserNameMismatch").innerHTML="";
+                }
+            }
+    }
+    
+    </script>
+
+</body>
+</html>
