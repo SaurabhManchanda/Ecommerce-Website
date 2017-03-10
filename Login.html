@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<style>
+#Wholepage
+{
+    background-color: #4CAF50;
+     -webkit-animation: animatezoom 0.6s;
+    animation: animatezoom 0.6s
+
+}
+
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+button {
+   background-color: #FA0505;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+#Signup
+    {
+    background-color: #050000;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 5%;
+    }
+.imgcontainer {
+    text-align: center;
+    margin: 24px 0 12px 0;
+}
+
+img.avatar {
+    width: 15%;
+    border-radius: 10%;
+}
+
+.container {
+    padding: 16px;
+}
+
+@-webkit-keyframes animatezoom {
+    from {-webkit-transform: scale(0)} 
+    to {-webkit-transform: scale(1)}
+}
+    
+@keyframes animatezoom {
+    from {transform: scale(0)} 
+    to {transform: scale(1)}
+}
+</style>
+<body>
+<div id="Wholepage">
+<Center><b><h1>SAURABH'S ONLINE STORE</h1></b></Center>
+<button onclick="Signup()" id="Signup">Signup</button>
+<form>
+  <div class="imgcontainer">
+    <img src="Men.png" alt="Avatar" class="avatar">
+  </div>
+
+  <div class="container">
+    <label><b>Username</b></label>
+    <input type="text" placeholder="Enter Username" id="uname" required>
+
+    <label><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" id="psw" required>
+ </div>
+</form>
+<button onclick="CheckUser()" id="Create">Login</button>
+    </div>
+<script>
+    function CheckUser()
+    {
+        var AUser=document.getElementById("uname").value;
+        var APassword=document.getElementById("psw").value;
+        if(!localStorage.User)
+            {
+                        alert("First You have to Register");
+                        window.location = "Signup.html";
+            }
+          else
+              {
+                 var localData = JSON.parse(localStorage.User);  
+        var flag=0;
+				for(var i=0;i<localData.length;i++)
+				{
+					if(localData[i].UserName == AUser && localData[i].Password == APassword)
+					{
+                        sessionStorage.setItem('FullName',localData[i].FullName);
+						flag = 1;
+						window.location = "User.html";
+					}
+                    if("Admin"==AUser && "Saurabh"==APassword)
+                    {
+                        flag=2;
+                        window.location="ProductProject with object .html";
+                    }
+				}
+				if(flag == 0)
+				{
+					alert("Incorrect Combo Used");
+				}
+              }
+    }
+    function Signup()
+    {
+       window.location="Signup.html"; 
+    }
+    
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<style>
+#Wholepage
+{
+    background-color: #4CAF50;
+    -webkit-animation: animatezoom 0.6s;
+    animation: animatezoom 0.6s
+
+}
+
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+input[type=button] {
+     background-color: #FA0505;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+.imgcontainer {
+    text-align: center;
+    margin: 24px 0 12px 0;
+}
+
+img.avatar {
+    width: 15%;
+    border-radius: 10%;
+}
+
+.container {
+    padding: 16px;
+}
+@-webkit-keyframes animatezoom {
+    from {-webkit-transform: scale(0)} 
+    to {-webkit-transform: scale(1)}
+}
+    
+@keyframes animatezoom {
+    from {transform: scale(0)} 
+    to {transform: scale(1)}
+}
+
+</style>
+<body>
+<div id="Wholepage">
+<Center><b><h1>SAURABH'S ONLINE STORE</h1></b></Center>
+<form>
+  <div class="imgcontainer">
+    <img src="Signup.png" alt="Avatar" class="avatar">
+  </div>
+  <div class="container">
+    <label><b>Username</b></label>
+    <input type="text" placeholder="Enter Username" id="uname" onblur="CheckUserName()" required>
+    <font color="red"><p id="UserNameMismatch"></p></font>
+    <label><b>Full Name</b></label>
+    <input type="text" placeholder="Enter Full Name" id="fname" onblur="FullNameCheck()"required>
+    <font color="red"><p id="FullName"></p></font>
+    <label><b>Email</b></label>
+    <input type="text" placeholder="Enter Email" id="Email" onblur="EmailValidate()"required>
+    <font color="red"><p id="EmailValidate"></p></font>
+    <label><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" id="psw" required>
+    <font color="red"><p id="Password"></p></font>
+    <label><b>Confirm Password</b></label>
+    <input type="password" placeholder="Confirm Password" id="cpsw" onblur="CheckPassword()" required>
+    <font color="red"><p id="PasswordMismatch"></p></font>
+    <input type="button" id="Register" value="Register"/>
+  </div>
+</form>
+    </div>
+<script> 
+var User=[];
+var UserId=1;
+function SaveDataToLocalStorage(NewUser) 
+{
+  if(!localStorage.User)
+    {
+       localStorage.User = JSON.stringify(User);
+	}
+	else
+	{
+		var PrevData = JSON.parse(localStorage.User);
+		PrevData.push(NewUser);
+        localStorage.User = JSON.stringify(PrevData);
+	}
+}
+        Register.addEventListener("click",function(event){
+             if((CheckUserName()==1) && (EmailValidate()==1) && (CheckPassword()==1) && (FullNameCheck()==1))
+            {
+                CreateUser();
+                location.assign("Login.html");
+            }
+        else{
+            alert("Information Incorrect");
+        }         
+        });
+function CreateUser()
+ {
+   var NewUser = new Object();
+   if(localStorage.User)
+     {
+       LocalData = JSON.parse(localStorage.User);
+       UserId = LocalData.length +1;
+     }
+    NewUser.Id=UserId;
+    NewUser.UserName=document.getElementById("uname").value;
+    NewUser.FullName=document.getElementById("fname").value;
+    NewUser.Password=document.getElementById("psw").value;
+    NewUser.Email=document.getElementById("Email").value;
+    User.push(NewUser);
+    SaveDataToLocalStorage(NewUser);
+}
+function CheckPassword()
+{
+  var R=1;
+  var Password=document.getElementById("psw").value;
+  var ConfirmPassword=document.getElementById("cpsw").value;
+  if(Password!=ConfirmPassword)
+      {
+         var ErrorMessage="Password Do Not Match"
+         document.getElementById("PasswordMismatch").innerHTML=ErrorMessage;
+          R=0;
+      }
+  else if(Password.length<1){
+         var EmptyErrorMessage="Password Field is Empty"
+         document.getElementById("PasswordMismatch").innerHTML=EmptyErrorMessage;
+         R=0;
+       }
+  else {
+         document.getElementById("PasswordMismatch").innerHTML="";
+         R=1;
+       }
+    return R;
+}
+function CheckUserName()
+{
+   var R=1;
+   var InputUserName=document.getElementById("uname").value;
+   if(InputUserName.length<1) 
+   {
+     var UserEmptyErrorMessage="UserName Field is Empty";
+     document.getElementById("UserNameMismatch").innerHTML=UserEmptyErrorMessage;
+     R=0;
+   }
+   else if(localStorage.User)
+            {
+             User = JSON.parse(localStorage.User);
+             for(var i=0;i<User.length;i++)
+             {
+               if(User[i].UserName===InputUserName)
+              {
+                var UserNameErrorMessage="UserName Already Exist";
+                document.getElementById("UserNameMismatch").innerHTML=UserNameErrorMessage;
+                R=0;
+              }
+            }
+            }
+          else{
+                document.getElementById("UserNameMismatch").innerHTML="";
+                R=1;
+              }
+    return R;
+}
+function FullNameCheck()
+{
+    var R=1;
+    var FullName=document.getElementById("fname").value;
+    if(FullName.length<1)
+        {
+            var FullNameErrorMessage="Full Name Field is Empty";
+            document.getElementById("FullName").innerHTML=FullNameErrorMessage;
+            R=0;
+        }
+    else
+        {
+            document.getElementById("FullName").innerHTML="";
+            R=1;
+        }
+    return R;
+}
+function EmailValidate()
+{
+    var R=1;
+    var Email = document.getElementById("Email").value;
+    var atpos = Email.indexOf("@");
+    var dotpos = Email.lastIndexOf(".");
+     if(Email.length<1)
+        {
+           var EmailEmptyErrorMessage="Email Field is Empty";
+           document.getElementById("EmailValidate").innerHTML=EmailEmptyErrorMessage;
+           R=0; 
+        }
+      else  if (atpos<1 || dotpos<atpos+2 || dotpos+2>=Email.length) {
+            var EmailErrorMessage="Not a valid e-mail address";
+            document.getElementById("EmailValidate").innerHTML=EmailErrorMessage;
+            R=0;
+              }
+        else
+        {
+            document.getElementById("EmailValidate").innerHTML="";
+            R=1;
+        }
+    return R;
+}
+</script>
+</body>
+</html>

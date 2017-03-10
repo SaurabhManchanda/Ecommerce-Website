@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Saurabh's Online Store</title>
+<link rel="stylesheet" href="Design.css">
+</head>
+<body>
+ <div id="Wholepage">
+<Center><b><h1>SAURABH'S ONLINE STORE</h1></b></Center>
+<p>Hi</p>
+<p id="CurrentUser"></p>
+<button onclick="MyCart()" id="Cart" style="visibility:visible;">My Cart</button>
+<button onclick="Logout()" id="Logout" style="visibility:visible;">Logout</button>
+<div id="Products" style="visibility:visible;">
+<ul type="disc" id="ProductsList"></ul>
+</div>
+<div id="CartL" style="visibility:hidden;">
+<ul type="disc" id="CartList"></ul>
+<button onclick="Payment()" id="Pay" style="visibility:hidden;">Payment</button>
+</div>
+<script>
+var User=[];
+var CurrentUserArray=[];
+StoredUsernamePasswords();
+
+var CurrentName=sessionStorage.getItem('FullName');
+document.getElementById("CurrentUser").innerHTML = CurrentName;
+if(localStorage.products){
+var PrevData = JSON.parse(localStorage.products);
+User=PrevData;
+var Length=User.length;
+for(var i=0;i<Length;i++){
+  PreviousData(i);  
+}
+}
+else{
+    alert("No Product Found..Login with Admin Id to add products..Press Ok to know Admin Id");
+    alert("Username=Admin Password=Saurabh");
+}
+function PreviousData(i)
+{
+    var PrevId=User[i].Id;
+    console.log(PrevId);
+    var PrevName=User[i].Name;
+    var PrevDesc=User[i].Description;
+    var PrevPrice=User[i].Price;
+    var PrevQuantity=User[i].Quantity;
+    var ProductList=document.getElementById("ProductsList");
+            var Element = document.createElement("li");
+            var Node=document.createTextNode("Name : "+PrevName+" "+"Description : "+PrevDesc+" "+" Price : "+PrevPrice+" "+"Quantity : "+PrevQuantity);
+            Element.appendChild(Node);
+            ProductList.appendChild(Element);
+            var Button=document.createElement("Button");					  
+		    Button.innerHTML = "Add To Cart";
+		    Element.appendChild(Button);
+		    Button.addEventListener('click',function()
+		  {
+            AddCart(PrevId-1);
+		  }); 	
+          ProductList.appendChild(Element); 
+}
+function AddCart(i)
+    {
+        var CurrentObject = new Object();
+        var CId=User[i].Id;
+        console.log(CId);
+        var CName=User[i].Name;
+        var CDesc=User[i].Description;
+        var CPrice=User[i].Price;
+        var CQuantity=User[i].Quantity;
+        CurrentObject.Id=CId;
+        CurrentObject.Name=CName;
+        CurrentObject.Description=CDesc;
+        CurrentObject.Price=CPrice;
+        CurrentObject.Quantity=CQuantity;
+        var CartList=document.getElementById("CartList");
+            var Element = document.createElement("li");
+            var Node=document.createTextNode("Name : "+CName+" "+"Description : "+CDesc+" "+" Price : "+CPrice+" "+"Quantity : "+CQuantity);
+            Element.appendChild(Node);
+            CartList.appendChild(Element); 
+        CurrentUserArray.push(CurrentObject);
+    }
+function MyCart()
+{
+    document.getElementById('CartL').style.visibility='visible';
+    document.getElementById('Pay').style.visibility='visible';
+    document.getElementById('Products').style.visibility='hidden';
+}
+function Logout()
+    {
+        window.location.href="Main.html";
+    }
+function Payment()
+    {
+        window.location.href="Payment.html";
+        sessionStorage.setItem('key', CurrentName);
+        SaveDataToLocalStorage();
+    }
+function SaveDataToLocalStorage() 
+        {
+          localStorage.setItem(CurrentName, JSON.stringify(CurrentUserArray));
+          alert("Data Stored");
+        }
+function StoredUsernamePasswords() 
+        { 
+            var PrevData = localStorage.getItem("products");
+            User= JSON.parse(PrevData); 
+            return PrevData;
+	    }
+</script>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</div>
+</body>
+</html>
